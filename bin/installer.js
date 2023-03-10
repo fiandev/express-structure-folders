@@ -4,8 +4,8 @@ const { resolve, join } = require("path");
 const { copySync, pathExists, emptyDirSync } = require("fs-extra");
 
 
-const createSlug = (text) => {
-  return text.replace(/(\`|\'|\")/, "").split(" ").join("-").split("_").join("-");
+const createSlug = (text = "") => {
+  return text.toString().replace(/(\`|\'|\")/, "").split(" ").join("-").split("_").join("-");
 };
 
 const project_name = createSlug(process.argv[2]);

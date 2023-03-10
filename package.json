@@ -1,10 +1,10 @@
 {
   "name": "express-structure-folders",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "./bin/installer.js",
   "private": false,
   "scripts": {
-    "postinstall": "node ./bin/installer.js"
+    "postinstall": "npm install && npm link"
   },
   "dependencies": {
     "fs-extra": "^11.1.0"
