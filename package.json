@@ -1,6 +1,8 @@
 {
   "name": "express-structure-folders",
+  "version": "1.0.0",
   "main": "./bin/installer.js",
+  "private": false,
   "scripts": {
     "postinstall": "node ./bin/installer.js"
   },
