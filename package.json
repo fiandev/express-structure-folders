@@ -1,15 +1,36 @@
 {
   "name": "express-structure-folders",
   "description": "starter template for express app",
-  "version": "2.0.0",
+  "version": "2.0.0-beta",
   "main": "./bin/installer.js",
   "private": false,
   "bin": {
-    "express-structure-folders": "./bin/installer.js",
-    "express-app": "./bin/installer.js"
+    "express-structure-folders": "bin/installer.js",
+    "express-app": "bin/installer.js"
   },
   "dependencies": {
     "fs-extra": "^11.1.0"
-  }
+  },
+  "directories": {
+    "template": "template"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiandev/express-structure-folders.git"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "template",
+    "fiandev"
+  ],
+  "author": "fiandev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fiandev/express-structure-folders/issues"
+  },
+  "homepage": "https://github.com/fiandev/express-structure-folders#readme"
 }
-  
