@@ -1,12 +1,15 @@
 {
   "name": "express-structure-folders",
-  "version": "1.0.2",
+  "description": "starter template for express app",
+  "version": "2.0.0",
   "main": "./bin/installer.js",
   "private": false,
-  "scripts": {
-    "postinstall": "npm install && npm link"
+  "bin": {
+    "express-structure-folders": "./bin/installer.js",
+    "express-app": "./bin/installer.js"
   },
   "dependencies": {
     "fs-extra": "^11.1.0"
   }
 }
+  

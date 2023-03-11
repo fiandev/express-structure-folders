@@ -1,7 +1,2 @@
+!/template
 /node_modules
-
-/test
-.env
-.env.local
-.env.development.local
-.env.test
