@@ -14,4 +14,9 @@ npm express-structure-folders -g
 npx express-app myapp
 ```
 
+
+### documentation
+
+you can read full documentation on <a href="./DOCS.md">here</a>.
+
 > built with ♥️ by fiandev
