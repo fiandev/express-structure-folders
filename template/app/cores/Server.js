@@ -2,7 +2,7 @@ const device = require("express-device");
 const consolidate = require("consolidate");
 const Express = require("express");
 
-const Router = require("../routes/web");
+const Router = require("./Router");
 
 const app = new Express();
 
@@ -66,7 +66,7 @@ class Server {
     // register router
     app.use("/", Router.init());
     // exceptions routes
-    // app.use("*", Router.exception(this));
+    app.use("*", Router.exception(this));
     app.use(Express.static(__dirname + "/public"));
     app.use(Express.urlencoded({ extended: true }));
   }
@@ -76,15 +76,13 @@ class Server {
    * @destructuring {Number} timeout
    * @return {Void}
    */
-  start(args = {}) {
-    const { PORT } = this;
-    const { timeout = null } = args;
-    let thread = app.listen(PORT, () => {
+  start({ timeout }) {
+    let thread = app.listen(this.PORT, () => {
       console.log(`Server running on port ${this.PORT}`);
+
       if (timeout) {
         setTimeout(function () {
           thread.close();
-          console.log(`Server at port ${PORT} stopped`);
         }, timeout);
       }
     });

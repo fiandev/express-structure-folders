@@ -15,7 +15,7 @@ const axios = async ({ baseurl, path, method = "get", data = {} }) => {
     throw `parameter 'data' must be instance class FormDatà`;
 
   let url = new URL(path, baseurl).toString();
-  let response = await _axios(url, {
+  let response = _axios(url, {
     method: method,
     data: data,
   });
