@@ -5,7 +5,13 @@ const { copySync, existsSync, emptyDirSync, moveSync } = require("fs-extra");
 const { readdirSync } = require("fs");
 
 const createSlug = (text = "") => {
-  return text.toString().replace(/(\`|\'|\")/, "").split(" ").join("-").split("_").join("-");
+  return text
+    .toString()
+    .replace(/(\`|\'|\")/, "")
+    .split(" ")
+    .join("-")
+    .split("_")
+    .join("-");
 };
 
 const project_name = createSlug(process.argv[2]);
@@ -20,12 +26,15 @@ const path_env = join(process.cwd(), ".env");
 const main = () => {
   emptyDirSync(path_project);
   copySync(template, dest);
-  
+
   /* copying static files */
-  readdirSync(static_files).map(function(filename){
-    copySync(join(static_files, filename), join(dest, `/.${parse(filename).name}`));
+  readdirSync(static_files).map(function (filename) {
+    copySync(
+      join(static_files, filename),
+      join(dest, `/.${parse(filename).name}`)
+    );
   });
-  console.log(`express app created at ${ dest }`);
+  console.log(`express app created at ${dest}`);
 };
 
 main();
