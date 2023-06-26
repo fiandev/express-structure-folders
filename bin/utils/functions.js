@@ -3,12 +3,21 @@ const { exec } = require("child_process");
 
 const shell = (command) => {
   return new Promise((resolve, reject) => {
-    exec(command, (err, stdout, stderr) => {
-      if (err) {
-        console.error(`exec error: ${err}`);
+    exec(command, (error, stdout, stderr) => {
+      if (error || stderr) {
+        console.error({ error, stderr });
         return reject();
       }
       return resolve();
+    });
+  });
+};
+
+const shellSync = (text) => {
+  text.split("\n").map(command => {
+    exec(command, (error, stdout, stderr) => {
+      if (error || stderr) console.error({ error, stderr });
+      if (stdout) console.log(stdout);
     });
   });
 };
@@ -27,8 +36,14 @@ const transformPackage = (pathfile, toTransfrom) => {
   writeFileSync(pathfile, JSON.stringify(data, null, 2));
 };
 
+const jsonParse = (psthfile) => {
+  return JSON.parse(pathfile);
+};
+
 module.exports = {
   shell,
+  shellSync,
   createSlug,
   transformPackage,
+  jsonParse,
 };

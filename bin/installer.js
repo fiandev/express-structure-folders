@@ -1,14 +1,16 @@
 #!/usr/bin/env node
-const yargs = require('yargs/yargs')
+const pkg = require('../package.json');
+const yargs = require('yargs/yargs');
 const { resolve, join, basename, parse } = require("path");
 const { copySync, existsSync, emptyDirSync, moveSync } = require("fs-extra");
 const { readdirSync } = require("fs");
 const { green, yellow, red, cyan } = require("colors");
-const { createSlug, shell, transformPackage } = require("./utils/functions");
+const { createSlug, shell, transformPackage, jsonParse } = require("./utils/functions");
 
 const argv = yargs(process.argv).argv;
 const input = argv._[2];
 const isUseES6 = argv.es6;
+const isAutoInstallDependencies = argv.auto;
 
 const project_name = createSlug(input);
 const path_project = join(process.cwd(), project_name);
@@ -26,7 +28,9 @@ const main = async () => {
   
   /* copying static files */
   readdirSync(static_files).map(function(filename){
-    copySync(join(static_files, filename), join(dest, `/.${parse(filename).name}`));
+    let file = join(dest, `/.${parse(filename).name}`);
+    
+    copySync(join(static_files, filename), file);
   });
   
   transformPackage(path_package_file, {
@@ -43,9 +47,20 @@ const main = async () => {
     await shell(`cjs-to-es6 ${dest}`);
   }
   
+  if (isAutoInstallDependencies) {
+    console.log(`downloading required ${ cyan("dependencies") }`);
+    await shell(`cd ${ dest } && npm install`);
+  }
   
-  console.log(`express app created at ${ green(dest) }`);
-  console.log(`please run:\n\n   ${ cyan("cd") } ${ input }\n   ${ cyan("npm") } install\n   ${ cyan("npm") } run dev\n`);
+  console.log(`${ yellow("[!]") } express app created at ${ green(`./${ dest.split("/").pop() }`) }`);
+  let text = `
+    ${ cyan("cd") } ${ input }
+    ${ !isAutoInstallDependencies ? `${ cyan("npm") } install` : "" }
+    ${ cyan("npm") } run dev
+`;
+  text = text.split("\n").filter(v => v.trim() !== "").join("\n");
+  console.log(`${ cyan("[!]") } please run:\n\n${ text }\n`);
+  console.log(`${ cyan("[!]") } ${ pkg.name + " " +yellow("v" + pkg.version) }`);
 };
 
 main();
