@@ -1,19 +1,32 @@
 # express structure folders
+starter template for express app
 
 ## how to usage
 
 ### installation
 
 ```shell
-npm express-structure-folders -g
+npm install express-structure-folders -g
+```
+
+### basic command line
+
+```shell
+epxress-app <name app> [options]
 ```
 
 ### create express app
+
+#### use commonjs syntax (default)
 
 ```shell
 npx express-app myapp
 ```
 
+#### use es6 syntax
+```shell
+npx express-app myapp --es6
+```
 
 ### documentation
 

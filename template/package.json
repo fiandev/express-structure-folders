@@ -18,6 +18,16 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20",
-    "sequelize-cli": "^6.6.0"
+    "sequelize-cli": "^6.6.0",
+    "module-alias": "^2.2.3"
+  },
+  "_moduleAliases": {
+    "@": "./",
+    "@app": "./app",
+    "@controllers": "./app/controllers",
+    "@views": "./app/views",
+    "@cores": "./app/cores",
+    "@utilities": "./app/utilities",
+    "@database": "./app/database"
   }
 }
