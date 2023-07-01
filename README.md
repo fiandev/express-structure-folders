@@ -28,6 +28,16 @@ npx express-app myapp
 npx express-app myapp --es6
 ```
 
+### use other database
+
+#### use mongodb
+```shell
+express-app myapp --mongodb
+
+# or you can this, same result
+express-app myapp --mongoose
+```
+
 ### documentation
 
 you can read full documentation on <a href="./DOCS.md">here</a>.

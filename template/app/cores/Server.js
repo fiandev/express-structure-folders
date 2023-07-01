@@ -31,8 +31,8 @@ class Server {
 
     /* default engine */
     const default_engines = ["pug", "ejs"];
-        
-    app.set("view engine", "ejs");  
+
+    app.set("view engine", "ejs");
 
     if (!VIEW_ENGINES) return this;
 

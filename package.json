@@ -1,7 +1,7 @@
 {
   "name": "express-structure-folders",
   "description": "starter template for express app",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "main": "./bin/installer.js",
   "private": false,
   "bin": {
@@ -19,7 +19,9 @@
     "template": "template"
   },
   "scripts": {
-    "prettier": "prettier ./template -w"
+    "prettier:bin": "prettier ./bin/**/*.{js,ts} -w",
+    "prettier:template": "prettier ./template/**/*.{js,ts} -w",
+    "prettier:static": "prettier ./static/**/*.{js,ts} -w"
   },
   "repository": {
     "type": "git",
