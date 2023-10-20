@@ -1,7 +1,7 @@
 {
   "name": "express-structure-folders",
   "description": "starter template for express app",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "./bin/installer.js",
   "private": false,
   "bin": {
@@ -9,9 +9,11 @@
     "express-app": "bin/installer.js"
   },
   "dependencies": {
+    "@fiandev/js-modules": "^0.0.3",
     "cjs-to-es6": "^2.0.1",
     "colors": "^1.4.0",
     "exec-sh": "^0.4.0",
+    "fast-glob": "^3.3.1",
     "fs-extra": "^11.1.0",
     "yargs": "^17.7.2"
   },
@@ -35,6 +37,11 @@
   ],
   "author": "fiandev",
   "license": "MIT",
+  "files": [
+    "./bin/**/*",
+    "./static/**/*",
+    "./template/**/*"
+  ],
   "bugs": {
     "url": "https://github.com/fiandev/express-structure-folders/issues"
   },

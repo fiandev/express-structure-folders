@@ -14,20 +14,18 @@ const {
   exportStaticFile,
 } = require("./utils/functions");
 
-/* ==========
-   parsing command line arguments
-   
-   =========== */
+/**
+ * parsing command line arguments
+ */
 const argv = yargs(process.argv).argv;
 const input = argv._[2];
-const isUseES6 = argv.es6;
+const isUseES6 = argv.es6 || argv.esm || argv.module;
 const isUseMongodb = argv.mongodb || argv.mongoose;
 const isAutoInstallDependencies = argv.auto;
 
-/* ==========
-   resolving project path
-   
-   =========== */
+/**
+ * resolving project
+ */
 const project_name = createSlug(input);
 const path_project = join(process.cwd(), project_name);
 
@@ -36,9 +34,9 @@ const dest = resolve(path_project);
 const template = join(__dirname, "../template");
 const env_example = join(process.cwd(), ".env.example");
 const path_env = join(process.cwd(), ".env");
-const path_package_file = join(dest, "package.json");
+const path_package_file = join(__dirname, "../template/package.json");
 
-/*
+/**
  * main functiok
  * @return {Void}
  */
@@ -55,20 +53,13 @@ const main = async () => {
       return !exp.test(src);
     }
   });
-
+  
   /* copying static files */
-  exportStaticFile(dest, ["gitignore", "env"]);
+  await exportStaticFile(dest, ["../static/files/.{gitignore,env}"]);
   transformPackage(path_package_file, {
     type: "module",
     _moduleAliases: isUseES6 ? "default" : null,
     dependencies: {
-      axios: "^1.3.3",
-      cheerio: "^1.0.0-rc.12",
-      consolidate: "^0.16.0",
-      dotenv: "^16.0.3",
-      ejs: "^3.1.8",
-      express: "^4.18.2",
-      "express-device": "^0.4.2",
       mysql2: isUseMongodb ? null : "latest",
       mongoose: isUseMongodb ? "latest" : null,
       pug: "^3.0.2",
@@ -85,7 +76,7 @@ const main = async () => {
     let DBconfig = join(__dirname, "../static/config/sequelize");
     let AppDBConfig = join(dest, "/app/database");
     
-    exportStaticFile(dest, ["sequelizerc"]);
+    await exportStaticFile(dest, ["../static/files/.sequelizerc"]);
   }
   
   if (isUseES6) {

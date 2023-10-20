@@ -2,6 +2,7 @@ const { writeFileSync, readFileSync } = require("fs");
 const { exec } = require("child_process");
 const path = require("path");
 const fs = require("fs");
+const { glob } = require("fast-glob");
 
 const shell = (command) => {
   return new Promise((resolve, reject) => {
@@ -51,8 +52,10 @@ const transformPackage = (pathfile, toTransfrom) => {
       }
     }
   }
-
-  writeFileSync(pathfile, JSON.stringify(data, null, 2));
+  
+  let content = JSON.stringify(data, null, 2);
+  
+  writeFileSync(pathfile, content);
 };
 
 const jsonParse = (psthfile) => {
@@ -64,20 +67,26 @@ const type = (any) => {
   else return typeof any;
 };
 
-const exportStaticFile = (destination, files) => {
-  if (type(files) !== "string" && type(files) !== "array")
+const exportStaticFile = (destination, pathFiles) => {
+  if (type(pathFiles) !== "string" && type(pathFiles) !== "array")
     throw new TypeError(
-      `typeof argument 1 must be array or string '${type(files)}' given !`
+      `typeof argument 1 must be array or string '${type(pathFiles)}' given !`
     );
-  if (type(files) === "string") files = [files];
-
-  for (let filename of files) {
-    let pathfile = path.join(__dirname, `../../static/files/${filename}.txt`);
-    let dest = path.join(destination, `/.${filename}`);
-
-    if (fs.existsSync(pathfile)) fs.copyFileSync(pathfile, dest);
-    else throw new Error(`file ${pathfile} is not exist !`);
-  }
+  if (type(pathFiles) === "string") pathFiles = [pathFiles];
+  
+  return new Promise( async (resolve, reject) => {
+    let files = await glob(pathFiles);
+    
+    files.map(file => {
+      let dest = path.join(destination, `/${ path.basename(file) }`)
+      if (fs.existsSync(file)) {
+        fs.copyFileSync(file, dest);
+        resolve();
+      } else {
+        throw new Error(`file ${ path.basename(file) } is not exist !`);
+      }
+    });
+  })
 };
 
 module.exports = {
